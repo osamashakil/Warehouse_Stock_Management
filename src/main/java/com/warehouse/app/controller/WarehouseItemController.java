@@ -3,6 +3,7 @@ package com.warehouse.app.controller;
 import com.warehouse.app.dto.ItemRequestDto;
 import com.warehouse.app.dto.ItemResponseDto;
 import com.warehouse.app.service.WarehouseItemService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/items")
 public class WarehouseItemController {
-    private  WarehouseItemService warehouseItemService;
+    private final  WarehouseItemService warehouseItemService;
     public WarehouseItemController(WarehouseItemService warehouseItemService) {
         this.warehouseItemService = warehouseItemService;
     }
     @PostMapping()
-    public ResponseEntity<ItemResponseDto> create(@RequestBody ItemRequestDto itemRequestDto) {
+    public ResponseEntity<ItemResponseDto> create(@Valid @RequestBody ItemRequestDto itemRequestDto) {
         ItemResponseDto create= warehouseItemService.createItem(itemRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(create);
     }
